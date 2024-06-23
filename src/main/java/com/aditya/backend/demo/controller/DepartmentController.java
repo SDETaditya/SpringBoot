@@ -3,10 +3,7 @@ package com.aditya.backend.demo.controller;
 import com.aditya.backend.demo.entity.Department;
 import com.aditya.backend.demo.service.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,5 +20,21 @@ public class DepartmentController {
     @GetMapping("/departments")
     public List<Department> getListOfDepartments() {
         return departmentService.getDepartments();
+    }
+
+    @GetMapping("/departments/{id}")
+    public Department getDepartmentById(@PathVariable("id") Long departmentId){
+        return departmentService.getDepartmentById(departmentId);
+    }
+
+    @DeleteMapping("/departments/{id}")
+    public String deleteDepartmentById(@PathVariable("id") Long departmentId){
+        departmentService.deleteDepartmentById(departmentId);
+        return "Department with id " +departmentId+ " deleted successfully";
+    }
+
+    @PutMapping("/departments/{id}")
+    public Department updateDepartmentById(@PathVariable("id") Long departmentId, @RequestBody Department department){
+        return departmentService.updateDepartmentById(departmentId, department);
     }
 }
